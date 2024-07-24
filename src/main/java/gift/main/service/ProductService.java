@@ -51,9 +51,9 @@ public class ProductService {
     public void registerProduct(ProductAllRequest productAllRequest, UserVo user) {
         ProductRequest productRequest = new ProductRequest(productAllRequest);
         User seller = userRepository.findById(user.getId())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         Category category = categoryRepository.findByUniNumber(productRequest.categoryUniNumber())
-                .orElseThrow(() -> new CustomException(ErrorCode.CATEGORY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CATEGORY));
 
         Product product = new Product(productRequest, seller, category);
         Product saveProduct = productRepository.save(product);
@@ -65,7 +65,7 @@ public class ProductService {
     @Transactional
     public void deleteProduct(long id) {
         productRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
         productRepository.deleteById(id);
 
         List<WishProduct> wishProducts = wishProductRepository.findAllByProductId(id);
@@ -75,16 +75,16 @@ public class ProductService {
     @Transactional
     public void updateProduct(long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
         Category category = categoryRepository.findByUniNumber(productRequest.categoryUniNumber())
-                .orElseThrow(() -> new CustomException(ErrorCode.CATEGORY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CATEGORY));
         product.updateValue(productRequest, category);
     }
 
 
     public ProductResponce getProduct(long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
         return new ProductResponce(product);
     }
 
