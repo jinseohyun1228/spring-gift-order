@@ -2,10 +2,7 @@ package gift.main.service;
 
 import gift.main.Exception.CustomException;
 import gift.main.Exception.ErrorCode;
-import gift.main.dto.OptionListRequest;
-import gift.main.dto.ProductRequest;
-import gift.main.dto.ProductResponce;
-import gift.main.dto.UserVo;
+import gift.main.dto.*;
 import gift.main.entity.Category;
 import gift.main.entity.Product;
 import gift.main.entity.User;
@@ -51,7 +48,8 @@ public class ProductService {
     }
 
     @Transactional
-    public void registerProduct(ProductRequest productRequest, OptionListRequest optionListRequest, UserVo user) {
+    public void registerProduct(ProductAllRequest productAllRequest, UserVo user) {
+        ProductRequest productRequest = new ProductRequest(productAllRequest);
         User seller = userRepository.findById(user.getId())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         Category category = categoryRepository.findByUniNumber(productRequest.categoryUniNumber())
@@ -60,6 +58,7 @@ public class ProductService {
         Product product = new Product(productRequest, seller, category);
         Product saveProduct = productRepository.save(product);
 
+        OptionListRequest optionListRequest = new OptionListRequest(productAllRequest.optionRequests());
         optionService.registerOptionsFirstTime(saveProduct, optionListRequest);
     }
 
