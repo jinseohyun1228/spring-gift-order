@@ -17,4 +17,14 @@ public record OrderResponce(
                 order.getMessage()
         );
     }
+
+    @Override
+    public String toString() {
+        return "OrderResponce{" +
+                "productName='" + productName + '\'' +
+                ", optionName='" + optionName + '\'' +
+                ", quantity=" + quantity +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
