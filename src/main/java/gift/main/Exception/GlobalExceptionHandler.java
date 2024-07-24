@@ -27,6 +27,10 @@ public class GlobalExceptionHandler {
         return "error/error";
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4ca81232ad823be93b7be35558db0de94b92c024
     @ResponseBody
     @ExceptionHandler(SignatureException.class)
     public ResponseEntity<?> handleTokenException(Model model, SignatureException e) {
@@ -38,6 +42,10 @@ public class GlobalExceptionHandler {
                 .body(responseBody);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4ca81232ad823be93b7be35558db0de94b92c024
     @ResponseBody
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handleInvalidArgument(IllegalArgumentException e) {
@@ -57,6 +65,10 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4ca81232ad823be93b7be35558db0de94b92c024
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationFailure(MethodArgumentNotValidException e) {
